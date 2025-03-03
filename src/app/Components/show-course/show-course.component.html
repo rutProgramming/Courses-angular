@@ -1,0 +1,34 @@
+<!-- {{course?.title}}
+{{course?.description}}
+<div>Teacher name: {{(teacher$ | async)?.name}}</div>
+<div>Teacher email: {{(teacher$ | async)?.email}}</div>
+@for (lesson of (lessons$ | async); track $index) {
+    <div>Lesson name: {{lesson.title}}</div>
+    <div>Lesson content: {{lesson.content}}</div>
+} -->
+
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ course?.title }}</mat-card-title>
+      <mat-card-subtitle>{{ course?.description }}</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div>
+        <strong>Teacher Name:</strong> {{ (teacher$ | async)?.name }}
+      </div>
+      <div>
+        <strong>Teacher Email:</strong> {{ (teacher$ | async)?.email }}
+      </div>
+      
+      <mat-divider></mat-divider>
+  
+        <h3 mat-subheader>Lessons</h3>
+        @for (lesson of (lessons$ | async); track $index) {
+
+            <h4 mat-line>{{ lesson.title }}</h4>
+            <p mat-line>{{ lesson.content }}</p>
+        }
+    </mat-card-content>
+</mat-card>
+  

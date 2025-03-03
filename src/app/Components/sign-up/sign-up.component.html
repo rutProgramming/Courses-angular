@@ -1,0 +1,39 @@
+<div class="form-wrapper">
+
+  <!-- טופס הרשמה -->
+  <form [formGroup]="signInForm" (ngSubmit)="signUp()" class="form-container">
+    <mat-card class="form-card">
+      <mat-card-title>Sign Up</mat-card-title>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput name="name" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" formControlName="password" type="password">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="principle">Principle</mat-option>
+          <mat-option value="teacher">Teacher</mat-option>
+          <mat-option value="student">Student</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" class="submit-button">
+
+        Sign Up
+      </button>
+    </mat-card>
+  </form>
+
+</div>
