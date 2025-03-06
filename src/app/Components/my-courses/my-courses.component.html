@@ -1,0 +1,18 @@
+@for (course of (this.myCourses$|async); track $index) {
+    <mat-card-header>
+        <mat-card-title>{{ course.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button color="accent"  [routerLink]="'./' + course.id">View Course</button>
+        @if((this.user$)?.role == "student"){
+        <button mat-raised-button color="warn" (click)="leaveTheCourse(course.id)">Leave Course</button>
+        }
+        </mat-card-actions>
+}
+<br/>
+
+
+
+<br/>
+
+<router-outlet></router-outlet>

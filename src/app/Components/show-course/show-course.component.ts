@@ -9,6 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { CoursesServiceService } from '../../Services/CoursesService/courses-service.service';
 import { UserService } from '../../Services/UserService/user.service';
+import { LessonserviceService } from '../../Services/LessonService/lessonservice.service';
+import { log } from 'node:console';
 
 @Component({
   imports: [CommonModule,MatCardModule,MatDivider  ],
@@ -22,17 +24,18 @@ export class ShowCourseComponent  {
   lessons$!: Observable<Lesson[]>;
 
 
-  constructor(private coursesService: CoursesServiceService, private activatedRoute: ActivatedRoute, private userService: UserService) { 
+  constructor(private coursesService: CoursesServiceService, private activatedRoute: ActivatedRoute, private userService: UserService,private lessonSevice: LessonserviceService) { 
       this.activatedRoute.paramMap.subscribe(params => {
         const id = params.get('id');
         if (id) {
             this.coursesService.getCourseById(id).subscribe(course => {
+              console.log(course)
               this.course = course;
               if (this.course?.teacherId) {
                 this.teacher$ = this.userService.GetUserById(this.course.teacherId);
               }
-              if (this.course?.id) {
-                this.lessons$ = this.coursesService.getLessons(this.course.id);
+              if (this.course.id) {
+                this.lessons$ = this.lessonSevice.getLessons(this.course.id);
                 console.log("lessons$:",this.lessons$);
               }
             })

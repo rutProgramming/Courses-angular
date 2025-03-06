@@ -8,8 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { CoursesServiceService } from '../../Services/CoursesService/courses-service.service';
-import { map, catchError, of } from 'rxjs';
+import { map, catchError, of, forkJoin } from 'rxjs';
 import { UserService } from '../../Services/UserService/user.service';
+import { LessonserviceService } from '../../Services/LessonService/lessonservice.service';
+import { Lesson } from '../../Modules/Lesson';
 
 @Component({
   selector: 'app-course-form-component',
@@ -21,7 +23,7 @@ import { UserService } from '../../Services/UserService/user.service';
 export class CourseFormComponentComponent {
   action: string = "";
   courseId: string | null = null;
-
+  
   courseForm = new FormGroup({
     title: new FormControl<string>('', [Validators.required]),
     description: new FormControl<string>('', [Validators.required]),
@@ -29,7 +31,7 @@ export class CourseFormComponentComponent {
     lessons: new FormArray<FormGroup>([])
   });
 
-  constructor(private CoursesService: CoursesServiceService, private route: ActivatedRoute, private router: Router, private userService: UserService) {
+  constructor(private CoursesService: CoursesServiceService, private route: ActivatedRoute, private router: Router, private userService: UserService, private lessonService: LessonserviceService) {
     this.route.paramMap.subscribe(params => {
       this.courseId = params.get('id');
       if (this.courseId) {
@@ -63,29 +65,21 @@ export class CourseFormComponentComponent {
         description: course.description,
         teacherId: course.teacherId,
       });
-
-      this.lessons.clear();
-
-      if (course.lessons && course.lessons.length > 0) {
-        course.lessons.forEach(lesson => {
-          this.lessons.push(new FormGroup({
-            title: new FormControl(lesson.title, Validators.required),
-            content: new FormControl(lesson.content, Validators.required)
-          }));
-        });
-      }
-
+      this.lessonService.getLessons(id).subscribe(lessons => {
+        this.lessons.clear();
+          lessons.forEach(lesson => {
+            this.lessons.push(new FormGroup({
+              title: new FormControl(lesson.title, Validators.required),
+              content: new FormControl(lesson.content, Validators.required)
+            }));
+          });
+      })
       console.log('Course loaded:', this.courseForm.value);
     });
   }
 
   send(): void {
-    console.log('Form before submit:', this.courseForm.value);
-    console.log(this.action);
-
     const preparedData = this.prepareCourseData();
-    console.log('Prepared data:', preparedData);
-
     if (this.action === "add") {
       this.add();
     } else {
@@ -103,15 +97,22 @@ export class CourseFormComponentComponent {
   }
 
   add(): void {
-    console.log('Form after submit:', this.courseForm.value);
     if (this.courseForm.valid) {
-      this.CoursesService.addCourse(this.prepareCourseData()).subscribe({
-        next: () => {
-          alert("Course added");
-          this.router.navigate(['courses']);
-        },
-        error: () => {
-          alert("Can't add course");
+      this.CoursesService.addCourse(this.prepareCourseData()).subscribe(course => {
+        {
+          this.courseId = course.courseId
+          if (this.lessons.controls.length > 0) {
+            if (!this.saveLessons()) {
+              alert("Can't update course");
+            }
+            else {
+              alert("Course added");
+              this.router.navigate(['courses']);
+            }
+          }
+          error: () => {
+            alert("Can't add course");
+          }
         }
       });
     }
@@ -121,12 +122,20 @@ export class CourseFormComponentComponent {
     if (this.courseForm.valid && this.courseId) {
       this.CoursesService.updateCourse(this.prepareCourseData(), this.courseId).subscribe({
         next: () => {
-          alert("Course updated");
-          this.router.navigate(['courses']);
+          if (this.lessons.controls.length > 0) {
+            if (!this.saveLessons()) {
+              alert("Can't update course");
+            }
+            else {
+              alert("Course updated");
+              this.router.navigate(['courses']);
+            }
+          }
         },
         error: () => {
           alert("Can't update course");
         }
+
       });
     }
   }
@@ -143,4 +152,23 @@ export class CourseFormComponentComponent {
       );
     };
   }
+  saveLessons(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      console.log(this.courseId);
+      const lessonObservables = this.lessons.controls.map(control =>
+        this.lessonService.addLesson(this.courseId!, control.value)
+      );
+
+      forkJoin(lessonObservables).subscribe({
+        next: () => {
+          resolve(true);
+        },
+        error: (err) => {
+          console.error('Error saving lessons:', err);
+          reject(false);
+        }
+      });
+    });
+  }
+
 }

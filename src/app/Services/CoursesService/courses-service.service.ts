@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { UserDetailsService } from '../userDetailsService/user-details.service';
 import { Course } from '../../Modules/Course';
 import { Lesson } from '../../Modules/Lesson';
@@ -24,9 +24,23 @@ export class CoursesServiceService {
   getCourses(): Observable<Course[]> {
     return this.http.get<Course[]>(this.apiUrl, { headers: this.getHeaders() });
   }
-  getLessons(id: string): Observable<Lesson[]> {
-    return this.http.get<Lesson[]>(`${this.apiUrl}/:${id}/lessons`, { headers: this.getHeaders() });
+  ///student/:studentId
+  getCoursesByUserId(userId: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.apiUrl}/student/${userId}`, { headers: this.getHeaders() });
+
   }
+  getCoursesWithoutUserId(userId: string): Observable<Course[]> {
+    return forkJoin([
+      this.getCourses(), 
+      this.getCoursesByUserId(userId)
+    ]).pipe(
+      map(([allCourses, userCourses]) => {
+        const userCourseIds = userCourses.map(c => c.id);
+        return allCourses.filter(course => !userCourseIds.includes(course.id));
+      })
+    );
+  }
+  
   getCourseById(id: string): Observable<Course> {
     return this.http.get<Course>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
   }
