@@ -20,9 +20,8 @@ import { UserDetailsService } from '../../Services/userDetailsService/user-detai
 })
 export class SignUpComponent {
   constructor(private userService: UserService,private router: Router,private dialogRef: MatDialogRef<SignUpComponent>,private user: UserDetailsService) {
-    console.log('UserDetailsService:', this.user);
 }
-  signInForm = new FormGroup({
+  signUpForm = new FormGroup({
     name: new FormControl<string>('', [Validators.required]),
     email: new FormControl<string>('', [Validators.required]),
     role: new FormControl<string>('', [Validators.required]),
@@ -34,9 +33,9 @@ export class SignUpComponent {
     }
   
   signUp() {
-    if (this.signInForm.valid)
+    if (this.signUpForm.valid)
     {
-      this.userService.signUp(this.signInForm.value as Partial<User>).subscribe({
+      this.userService.signUp(this.signUpForm.value as Partial<User>).subscribe({
         next: (response:Partial<User>) => {
           console.log(response);
           this.user.setUser(response);

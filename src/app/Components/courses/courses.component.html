@@ -1,25 +1,24 @@
-@for (course of (this.courses$|async); track $index) {
-    <mat-card-header>
-        <mat-card-title>{{ course.title| capitalize }}
-        </mat-card-title>
-        </mat-card-header>
-      <mat-card-actions>
-        <button mat-raised-button color="accent"  [routerLink]="'./' + course.id">View Course</button>
-        @if((this.user)?.role === "student"){
-        <button mat-raised-button color="primary" (click)="joinToCourse(course.id)">Join Course</button>
-        }
-        @else {
-            <button mat-raised-button color="warn" (click)="deleteTheCourse(course.id)">Delete Course</button>
-            <button mat-raised-button color="primary" (click)="editTheCourse(course.id)" >Edit Course</button>
+<div class="courses-container">
+  @for (course of (this.courses$|async); track $index) {
+    <mat-card class="course-card">
+      <mat-card-header>
+        <mat-card-title class="course-title">{{ course.title| capitalize }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-actions class="course-actions">
+        <button mat-raised-button  class="course-button" [routerLink]="'./' + course.id">View </button>
+        @if((this.user)?.role === "student") {
+          <button mat-raised-button class="course-button" (click)="joinToCourse(course.id)">Join</button>
+        } @else {
+          <button mat-raised-button class="course-button" (click)="deleteTheCourse(course.id)">Delete</button>
+          <button mat-raised-button  class="course-button" (click)="editTheCourse(course.id)">Edit</button>
         }
       </mat-card-actions>
-}
-<br/>
-
-
-@if((this.user)?.role === "teacher"){
-  <button mat-raised-button color="primary" (click)="addNewCourse()">Add New Course</button>
-}
-
-<br/>
-<router-outlet></router-outlet>
+    </mat-card>
+  }
+  <div class="add-course-container">
+    @if((this.user)?.role === "teacher") {
+      <button mat-raised-button color="primary" class="add-course-button" (click)="addNewCourse()">Add New Course</button>
+    }
+  </div>
+  <router-outlet></router-outlet>
+</div>

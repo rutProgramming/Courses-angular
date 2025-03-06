@@ -1,21 +1,14 @@
-<div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-size: cover; background-position: center;">
-
-  <mat-card style="max-width: 500px; margin: 50px auto; padding: 20px; background-color: rgba(255, 255, 255, 0.8);">
-
-    <mat-card-title>Welcome to the Online Course Management App</mat-card-title>
-
-    <mat-card-content>
-      <p style="color: #666; margin-bottom: 30px;">
-        This app allows teachers to manage courses and students to view them.
+<div class="home-container">
+  <mat-card class="home-card">
+    <mat-card-title class="home-title">Discover Your Potential</mat-card-title>
+    <mat-card-content class="home-content">
+      <p class="home-description">
+        Embark on a journey of learning and growth with our diverse range of online courses.
       </p>
-      <mat-icon  aria-hidden = "false"  aria-label = "סמל בית לדוגמה"  fontIcon = "home" > </mat-icon >
-
-      <div class="button-container" style="display: flex; justify-content: center;">
-        <button mat-raised-button color="primary" (click)="SignIn()" style="margin: 0 10px; padding: 10px 20px;">Sign In</button>
-        <button mat-raised-button color="primary" (click)="SignUp()" style="margin: 0 10px; padding: 10px 20px;">Sign Up</button>
+      <div class="button-container">
+        <button mat-raised-button class="home-button sign-in" (click)="SignIn()">Sign In</button>
+        <button mat-raised-button class="home-button sign-up" (click)="SignUp()">Sign Up</button>
       </div>
     </mat-card-content>
-
   </mat-card>
-
 </div>

@@ -1,18 +1,16 @@
-@for (course of (this.myCourses$|async); track $index) {
-    <mat-card-header>
-        <mat-card-title>{{ course.title| capitalize }}</mat-card-title>
+<div class="courses-container">
+  @for (course of (this.myCourses$|async); track $index) {
+    <mat-card class="course-card">
+      <mat-card-header>
+        <mat-card-title class="course-title">{{ course.title| capitalize }}</mat-card-title>
       </mat-card-header>
-      <mat-card-actions>
-        <button mat-raised-button color="accent"  [routerLink]="'./' + course.id">View Course</button>
-        @if((this.user$)?.role == "student"){
-        <button mat-raised-button color="warn" (click)="leaveTheCourse(course.id)">Leave Course</button>
+      <mat-card-actions class="course-actions">
+        <button mat-raised-button  class="course-button" [routerLink]="'./' + course.id">View</button>
+        @if((this.user$)?.role == "student") {
+          <button mat-raised-button class="course-button" (click)="leaveTheCourse(course.id)">Leave</button>
         }
-        </mat-card-actions>
-}
-<br/>
-
-
-
-<br/>
-
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
 <router-outlet></router-outlet>

@@ -100,7 +100,6 @@ export class CourseFormComponentComponent {
       this.CoursesService.addCourse(this.prepareCourseData()).subscribe(course => {
         {
           this.courseId = course.courseId
-          if (this.lessons.controls.length > 0) {
             if (!this.saveLessons()) {
               alert("Can't update course");
             }
@@ -108,7 +107,7 @@ export class CourseFormComponentComponent {
               alert("Course added");
               this.router.navigate(['home/courses']);
             }
-          }
+          
           error: () => {
             alert("Can't add course");
           }
@@ -121,14 +120,13 @@ export class CourseFormComponentComponent {
     if (this.courseForm.valid && this.courseId) {
       this.CoursesService.updateCourse(this.prepareCourseData(), this.courseId).subscribe({
         next: () => {
-          if (this.lessons.controls.length > 0) {
             if (!this.saveLessons()) {
               alert("Can't update course");
             }
             else {
               alert("Course updated");
               this.router.navigate(['courses']);
-            }
+            
           }
         },
         error: () => {
@@ -156,6 +154,9 @@ export class CourseFormComponentComponent {
       const lessonObservables = this.lessons.controls.map(control =>
         this.lessonService.addLesson(this.courseId!, control.value)
       );
+      if (this.lessons.controls.length === 0) {
+        return resolve(true);
+      }
 
       forkJoin(lessonObservables).subscribe({
         next: () => {
