@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable } from 'rxjs';
 import { UserDetailsService } from '../userDetailsService/user-details.service';
 import { Course } from '../../Modules/Course';
-import { Lesson } from '../../Modules/Lesson';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,6 @@ export class CoursesServiceService {
 
   private getHeaders(): HttpHeaders {
     let token = this.userDetailsService.getToken();
-    console.log(token);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -24,7 +22,6 @@ export class CoursesServiceService {
   getCourses(): Observable<Course[]> {
     return this.http.get<Course[]>(this.apiUrl, { headers: this.getHeaders() });
   }
-  ///student/:studentId
   getCoursesByUserId(userId: string): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.apiUrl}/student/${userId}`, { headers: this.getHeaders() });
 

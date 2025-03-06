@@ -28,12 +28,12 @@ export class UserDetailsService {
     sessionStorage.removeItem('user'); 
   }
 
-  getUserFromSessionStorage() {
-      const userData = sessionStorage.getItem('userData');
-      return userData ? JSON.parse(userData) : null;
-   
+  getUserFromSessionStorage(): any | null {
+    if (typeof sessionStorage !== 'undefined') {
+      return JSON.parse(sessionStorage.getItem('user') || 'null');
+    }
+    return null;
   }
-
   saveUserToSessionStorage(user: any) {
       sessionStorage.setItem('userData', JSON.stringify(user));
   }

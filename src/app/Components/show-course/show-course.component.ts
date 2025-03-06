@@ -28,7 +28,6 @@ export class ShowCourseComponent  {
         const id = params.get('id');
         if (id) {
             this.coursesService.getCourseById(id).subscribe(course => {
-              console.log(course)
               this.course = course;
               if (this.course?.teacherId) {
                 this.teacher$ = this.userService.GetUserById(this.course.teacherId);

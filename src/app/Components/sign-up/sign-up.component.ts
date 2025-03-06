@@ -37,9 +37,7 @@ export class SignUpComponent {
     {
       this.userService.signUp(this.signUpForm.value as Partial<User>).subscribe({
         next: (response:Partial<User>) => {
-          console.log(response);
           this.user.setUser(response);
-          console.log(this.user);
           this.closeDialogAndNavigate();
          
         },

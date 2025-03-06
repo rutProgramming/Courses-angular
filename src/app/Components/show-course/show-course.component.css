@@ -1,0 +1,59 @@
+.courses-container {
+    font-family: 'Montserrat', sans-serif;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    height: fit-content;
+  }
+  
+  .course-card {
+    padding: 30px;
+    border-radius: 16px;
+    height: fit-content;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    background: #f8f8f0;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  mat-card-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #33691e;
+    letter-spacing: 1.2px;
+    margin-bottom: 10px;
+  }
+  
+  mat-card-subtitle {
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  mat-card-content div {
+    margin-bottom: 8px;
+  }
+  
+  mat-divider {
+    margin: 20px 0;
+  }
+  
+  h3.mat-subheader {
+    font-size: 20px;
+    color: #33691e;
+    margin-bottom: 15px;
+  }
+  
+  h4.mat-line {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 5px;
+  }
+  
+  p.mat-line {
+    color: #666;
+    margin-bottom: 10px;
+  }

@@ -31,5 +31,5 @@ export const routes: Routes = [
 
     },
     { path: 'add', component: CourseFormComponentComponent },
-    { path: 'home/update/:id', component: CourseFormComponentComponent },
+    { path: 'update/:id', component: CourseFormComponentComponent },
 ];

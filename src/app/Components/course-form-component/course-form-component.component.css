@@ -1,7 +1,9 @@
 mat-card {
-  max-width: 600px;
-  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f0f4c3, #e8f5e9);
   padding: 20px;
+  margin: 20px;
 }
 
 mat-form-field {
@@ -9,13 +11,23 @@ mat-form-field {
   margin-bottom: 15px;
 }
 
-button {
-  margin-right: 10px;
+button[mat-button],
+button[mat-raised-button] {
+  border-radius: 8px;
+  padding: 10px 20px;
+  background-color: #ff9800; 
+  color: white;
 }
 
-.lesson-container {
-  border: 1px solid #ccc;
-  padding: 10px;
+body {
+  background: linear-gradient(135deg, #f0f4c3, #e8f5e9);
+  font-family: 'Arial', sans-serif; 
+}
+
+h2, h3, h4 {
   margin-bottom: 10px;
-  border-radius: 5px;
+}
+
+p {
+  line-height: 1.5;
 }
