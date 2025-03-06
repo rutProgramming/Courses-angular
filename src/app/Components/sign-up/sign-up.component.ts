@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {  UserService } from '../Services/UserService/user.service';
 import { User } from '../../Modules/User';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,7 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router'; 
 import { MatDialogRef } from '@angular/material/dialog';
-import { UserDetailsService } from '../Services/userDetailsService/user-details.service';
+import { UserService } from '../../Services/UserService/user.service';
+import { UserDetailsService } from '../../Services/userDetailsService/user-details.service';
 
 @Component({
    standalone: true,

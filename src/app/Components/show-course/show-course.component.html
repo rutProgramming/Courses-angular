@@ -25,7 +25,6 @@
   
         <h3 mat-subheader>Lessons</h3>
         @for (lesson of (lessons$ | async); track $index) {
-
             <h4 mat-line>{{ lesson.title }}</h4>
             <p mat-line>{{ lesson.content }}</p>
         }

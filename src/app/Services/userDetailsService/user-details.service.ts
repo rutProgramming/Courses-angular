@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../../../Modules/User';
+import { User } from '../../Modules/User';
 
 @Injectable({
   providedIn: 'root'
@@ -29,16 +29,12 @@ export class UserDetailsService {
   }
 
   getUserFromSessionStorage() {
-    //if (typeof window !== 'undefined' && window.sessionStorage) {
       const userData = sessionStorage.getItem('userData');
       return userData ? JSON.parse(userData) : null;
-    // }
-    // return null; 
+   
   }
 
   saveUserToSessionStorage(user: any) {
-    // if (typeof window !== 'undefined' && window.sessionStorage) {
       sessionStorage.setItem('userData', JSON.stringify(user));
-    //}
   }
 }

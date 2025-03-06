@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { CoursesServiceService } from '../Services/CoursesService/courses-service.service';
 import { Course } from '../../Modules/Course';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { UserDetailsService } from '../Services/userDetailsService/user-details.service';
 import { Observable } from 'rxjs';
 import { User } from '../../Modules/User';
 import { CommonModule } from '@angular/common';
+import { CoursesServiceService } from '../../Services/CoursesService/courses-service.service';
+import { UserDetailsService } from '../../Services/userDetailsService/user-details.service';
 
 
 @Component({
@@ -50,6 +50,8 @@ export class CoursesComponent {
     this.coursesService.deleteCourse(courseId).subscribe({
       next:(response)=>{
         console.log(response);
+        this.coursesService.getCourses().subscribe(courses => this.courses = courses);
+
       },
       error: () => {
         alert("can't delete course")
