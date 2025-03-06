@@ -74,7 +74,6 @@ export class CourseFormComponentComponent {
             }));
           });
       })
-      console.log('Course loaded:', this.courseForm.value);
     });
   }
 
@@ -107,7 +106,7 @@ export class CourseFormComponentComponent {
             }
             else {
               alert("Course added");
-              this.router.navigate(['courses']);
+              this.router.navigate(['home/courses']);
             }
           }
           error: () => {
@@ -154,7 +153,6 @@ export class CourseFormComponentComponent {
   }
   saveLessons(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      console.log(this.courseId);
       const lessonObservables = this.lessons.controls.map(control =>
         this.lessonService.addLesson(this.courseId!, control.value)
       );

@@ -27,7 +27,7 @@ export class LoginComponent {
   });
   private closeDialogAndNavigate() {
     this.dialogRef.close();
-    setTimeout(() => this.router.navigate(['/courses']), 100);
+    setTimeout(() => this.router.navigate(['/home']), 100);
   }
   signIn() {
     if (this.signInForm.valid)

@@ -1,6 +1,6 @@
 @for (course of (this.myCourses$|async); track $index) {
     <mat-card-header>
-        <mat-card-title>{{ course.title }}</mat-card-title>
+        <mat-card-title>{{ course.title| capitalize }}</mat-card-title>
       </mat-card-header>
       <mat-card-actions>
         <button mat-raised-button color="accent"  [routerLink]="'./' + course.id">View Course</button>

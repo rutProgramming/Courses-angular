@@ -1,25 +1,25 @@
-@for (course of this.courses; track $index) {
+@for (course of (this.courses$|async); track $index) {
     <mat-card-header>
-        <mat-card-title>{{ course.title }}</mat-card-title>
-      </mat-card-header>
+        <mat-card-title>{{ course.title| capitalize }}
+        </mat-card-title>
+        </mat-card-header>
       <mat-card-actions>
         <button mat-raised-button color="accent"  [routerLink]="'./' + course.id">View Course</button>
-        @if((this.user$ | async)?.role == "student"){
+        @if((this.user)?.role === "student"){
         <button mat-raised-button color="primary" (click)="joinToCourse(course.id)">Join Course</button>
-        <button mat-raised-button color="warn" (click)="leaveTheCourse(course.id)">Leave Course</button>
         }
         @else {
-        <button mat-raised-button color="warn" (click)="deleteTheCourse(course.id)">Delete Course</button>}
-        <button mat-raised-button color="primary" (click)="editTheCourse(course.id)" >Edit Course</button>
+            <button mat-raised-button color="warn" (click)="deleteTheCourse(course.id)">Delete Course</button>
+            <button mat-raised-button color="primary" (click)="editTheCourse(course.id)" >Edit Course</button>
+        }
       </mat-card-actions>
 }
 <br/>
 
 
-@if((this.user$ | async)?.role === "teacher"){
+@if((this.user)?.role === "teacher"){
   <button mat-raised-button color="primary" (click)="addNewCourse()">Add New Course</button>
 }
 
 <br/>
-
 <router-outlet></router-outlet>
