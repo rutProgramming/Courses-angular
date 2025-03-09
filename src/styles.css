@@ -1,0 +1,7 @@
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+body,html,:root {
+  
+    background: linear-gradient(135deg, #f0f4c3, #e8f5e9); 
+   
+  }
